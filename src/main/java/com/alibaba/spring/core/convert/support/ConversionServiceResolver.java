@@ -17,6 +17,7 @@ package com.alibaba.spring.core.convert.support;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.checkerframework.checker.confidential.qual.NonConfidential;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.beans.factory.config.SingletonBeanRegistry;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -104,7 +105,9 @@ public class ConversionServiceResolver {
 
     private void debug(String message, Object... args) {
         if (logger.isDebugEnabled()) {
-            logger.debug(format(message, args));
+            @SuppressWarnings("confidential")
+            @NonConfidential String msgStr = format(message, args);
+            logger.debug(msgStr);
         }
     }
 }

@@ -21,6 +21,7 @@ import com.alibaba.spring.context.config.ConfigurationBeanCustomizer;
 import com.alibaba.spring.context.config.DefaultConfigurationBeanBinder;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.checkerframework.checker.confidential.qual.NonConfidential;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.BeanFactoryAware;
@@ -55,7 +56,7 @@ public class ConfigurationBeanBindingPostProcessor implements BeanPostProcessor,
     /**
      * The bean name of {@link ConfigurationBeanBindingPostProcessor}
      */
-    public static final String BEAN_NAME = "configurationBeanBindingPostProcessor";
+    public static final @NonConfidential String BEAN_NAME = "configurationBeanBindingPostProcessor";
 
     static final String CONFIGURATION_PROPERTIES_ATTRIBUTE_NAME = "configurationProperties";
 
@@ -156,8 +157,12 @@ public class ConfigurationBeanBindingPostProcessor implements BeanPostProcessor,
         getConfigurationBeanBinder().bind(configurationProperties, ignoreUnknownFields, ignoreInvalidFields, configurationBean);
 
         if (log.isInfoEnabled()) {
-            log.info("The configuration bean [" + configurationBean + "] have been binding by the " +
-                    "configuration properties [" + configurationProperties + "]");
+            @SuppressWarnings("confidential")
+            @NonConfidential String configBean = configurationBean.toString();
+            @SuppressWarnings("confidential")
+            @NonConfidential String configProps = configurationProperties.toString();
+            log.info("The configuration bean [" + configBean + "] have been binding by the " +
+                    "configuration properties [" + configProps + "]");
         }
     }
 

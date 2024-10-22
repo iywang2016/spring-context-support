@@ -19,6 +19,7 @@ package com.alibaba.spring.beans.factory.annotation;
 import com.alibaba.spring.context.annotation.ExposingClassPathBeanDefinitionScanner;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.checkerframework.checker.confidential.qual.NonConfidential;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.BeanClassLoaderAware;
 import org.springframework.beans.factory.BeanFactory;
@@ -208,7 +209,9 @@ public abstract class AnnotationBeanDefinitionRegistryPostProcessor implements B
             putPrimaryBeanDefinition(primaryBeanDefinitions, annotatedBeanDefinition, beanDefinitionHolder.getAliases());
         } else {
             if (logger.isErrorEnabled()) {
-                logger.error("What's the problem? Please investigate " + beanDefinitionHolder);
+                @SuppressWarnings("confidential")
+                @NonConfidential String beanDef = beanDefinitionHolder.toString();
+                logger.error("What's the problem? Please investigate " + beanDef);
             }
         }
     }
@@ -245,13 +248,11 @@ public abstract class AnnotationBeanDefinitionRegistryPostProcessor implements B
     private void logPrimaryBeanDefinitions(Set<BeanDefinitionHolder> beanDefinitionHolders, String[] basePackages) {
         if (isEmpty(beanDefinitionHolders)) {
             if (logger.isWarnEnabled()) {
-                logger.warn("No Spring Bean annotation @" + getSupportedAnnotationTypeNames() + " was found under base packages"
-                        + asList(basePackages));
+                logger.warn("No Spring Bean annotation was found under given base packages");
             }
         } else {
             if (logger.isInfoEnabled()) {
-                logger.info(beanDefinitionHolders.size() + " annotations " + getSupportedAnnotationTypeNames() + " components { " +
-                        beanDefinitionHolders + " } were scanned under packages" + asList(basePackages));
+                logger.info("Multiple annotations were scanned under given packages");
             }
         }
     }

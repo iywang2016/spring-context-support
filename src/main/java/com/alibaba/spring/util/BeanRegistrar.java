@@ -18,6 +18,7 @@ package com.alibaba.spring.util;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.checkerframework.checker.confidential.qual.NonConfidential;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.beans.factory.support.RootBeanDefinition;
@@ -52,7 +53,7 @@ public abstract class BeanRegistrar {
      * @return if it's a first time to register, return <code>true</code>, or <code>false</code>
      */
     public static boolean registerInfrastructureBean(BeanDefinitionRegistry beanDefinitionRegistry,
-                                                     String beanName,
+                                                     @NonConfidential String beanName,
                                                      Class<?> beanType) {
 
         boolean registered = false;
@@ -64,7 +65,9 @@ public abstract class BeanRegistrar {
             registered = true;
 
             if (log.isInfoEnabled()) {
-                log.info("The Infrastructure bean definition [" + beanDefinition
+                @SuppressWarnings("confidential")
+                @NonConfidential String beanDef = beanDefinition.toString();
+                log.info("The Infrastructure bean definition [" + beanDef
                         + "with name [" + beanName + "] has been registered.");
             }
         }
@@ -103,13 +106,16 @@ public abstract class BeanRegistrar {
             List<String> factoryImplClassNames = loadFactoryNames(factoryClass, classLoader);
             for (String factoryImplClassName : factoryImplClassNames) {
                 Class<?> factoryImplClass = resolveClassName(factoryImplClassName, classLoader);
-                String beanName = decapitalize(getShortName(factoryImplClassName));
+                @SuppressWarnings("confidential")
+                @NonConfidential String beanName = decapitalize(getShortName(factoryImplClassName));
                 if (registerInfrastructureBean(registry, beanName, factoryImplClass)) {
                     count++;
                 } else {
                     if (log.isWarnEnabled()) {
-                        log.warn(format("The Factory Class bean[%s] has been registered with bean name[%s]",
-                                factoryImplClassName, beanName));
+                        @SuppressWarnings("confidential")
+                        @NonConfidential String message = format("The Factory Class bean[%s] has been registered with bean name[%s]",
+                                factoryImplClassName, beanName);
+                        log.warn(message);
                     }
                 }
             }

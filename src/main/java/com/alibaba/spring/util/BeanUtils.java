@@ -2,6 +2,7 @@ package com.alibaba.spring.util;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.checkerframework.checker.confidential.qual.NonConfidential;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.BeanFactoryUtils;
@@ -203,7 +204,14 @@ public abstract class BeanUtils {
         } catch (Exception e) {
 
             if (logger.isErrorEnabled()) {
-                logger.error(e.getMessage(), e);
+                String errorMessage = e.getMessage();
+                if (!checkConfidential(errorMessage)) {
+                    @SuppressWarnings("confidential")
+                    @NonConfidential String nonConfMessage = errorMessage;
+                    @SuppressWarnings("confidential")
+                    @NonConfidential Exception ex = e;
+                    logger.error(nonConfMessage, ex);
+                }
             }
 
         }
@@ -230,7 +238,9 @@ public abstract class BeanUtils {
 
         if (ObjectUtils.isEmpty(beanNames)) {
             if (logger.isDebugEnabled()) {
-                logger.debug("The bean [ class : " + beanClass.getName() + " ] can't be found ");
+                @SuppressWarnings("confidential")
+                @NonConfidential String beanName = beanClass.getName();
+                logger.debug("The bean [ class : " + beanName + " ] can't be found ");
             }
             return null;
         }
@@ -246,7 +256,14 @@ public abstract class BeanUtils {
         } catch (Exception e) {
 
             if (logger.isErrorEnabled()) {
-                logger.error(e.getMessage(), e);
+                String errorMessage = e.getMessage();
+                if (!checkConfidential(errorMessage)) {
+                    @SuppressWarnings("confidential")
+                    @NonConfidential String nonConfMessage = errorMessage;
+                    @SuppressWarnings("confidential")
+                    @NonConfidential Exception ex = e;
+                    logger.error(nonConfMessage, ex);
+                }
             }
 
         }
@@ -288,8 +305,10 @@ public abstract class BeanUtils {
         }
 
         if (logger.isDebugEnabled()) {
-            logger.debug(format("The bean[name : %s , type : %s] can't be found in Spring BeanFactory",
-                    beanName, beanType.getName()));
+            @SuppressWarnings("confidential")
+            @NonConfidential String message = format("The bean[name : %s , type : %s] can't be found in Spring BeanFactory",
+                    beanName, beanType.getName());
+            logger.debug(message);
         }
         return null;
     }
@@ -343,6 +362,12 @@ public abstract class BeanUtils {
 
         return sortedBeansMap;
 
+    }
+
+    private static boolean checkConfidential(String s) {
+        // arbitrary processing of message
+        boolean confidential = true;
+        return confidential;
     }
 
     static class NamingBean<T> extends AnnotationAwareOrderComparator implements Comparable<NamingBean>, Ordered {

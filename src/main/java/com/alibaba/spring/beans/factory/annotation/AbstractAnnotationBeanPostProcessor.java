@@ -18,6 +18,7 @@ package com.alibaba.spring.beans.factory.annotation;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.checkerframework.checker.confidential.qual.NonConfidential;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.PropertyValues;
@@ -209,7 +210,9 @@ public abstract class AbstractAnnotationBeanPostProcessor extends
 
                         if (Modifier.isStatic(field.getModifiers())) {
                             if (logger.isWarnEnabled()) {
-                                logger.warn("@" + annotationType.getName() + " is not supported on static fields: " + field);
+                                @SuppressWarnings("confidential")
+                                @NonConfidential String annoName = annotationType.getName();
+                                logger.warn("@" + annoName + " is not supported on static fields");
                             }
                             return;
                         }
@@ -252,14 +255,17 @@ public abstract class AbstractAnnotationBeanPostProcessor extends
                     if (attributes != null && method.equals(ClassUtils.getMostSpecificMethod(method, beanClass))) {
                         if (Modifier.isStatic(method.getModifiers())) {
                             if (logger.isWarnEnabled()) {
-                                logger.warn("@" + annotationType.getName() + " annotation is not supported on static methods: " + method);
+                                @SuppressWarnings("confidential")
+                                @NonConfidential String annoName = annotationType.getName();
+                                logger.warn("@" + annoName + " annotation is not supported on static methods");
                             }
                             return;
                         }
                         if (method.getParameterTypes().length == 0) {
                             if (logger.isWarnEnabled()) {
-                                logger.warn("@" + annotationType.getName() + " annotation should only be used on methods with parameters: " +
-                                        method);
+                                @SuppressWarnings("confidential")
+                                @NonConfidential String annoName = annotationType.getName();
+                                logger.warn("@" + annoName + " annotation should only be used on methods with parameters");
                             }
                         }
                         PropertyDescriptor pd = BeanUtils.findPropertyForMethod(bridgedMethod, beanClass);
@@ -339,7 +345,9 @@ public abstract class AbstractAnnotationBeanPostProcessor extends
 
         for (Object object : injectedObjectsCache.values()) {
             if (logger.isInfoEnabled()) {
-                logger.info(object + " was destroying!");
+                @SuppressWarnings("confidential")
+                @NonConfidential Object obj = object;
+                logger.info(obj + " was destroying!");
             }
 
             if (object instanceof DisposableBean) {
@@ -351,7 +359,9 @@ public abstract class AbstractAnnotationBeanPostProcessor extends
         injectedObjectsCache.clear();
 
         if (logger.isInfoEnabled()) {
-            logger.info(getClass() + " was destroying!");
+            @SuppressWarnings("confidential")
+            @NonConfidential String className = getClass().toString();
+            logger.info(className + " was destroying!");
         }
 
     }

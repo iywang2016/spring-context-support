@@ -2,6 +2,7 @@ package com.alibaba.spring.util;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.checkerframework.checker.confidential.qual.NonConfidential;
 import org.springframework.beans.factory.annotation.AnnotatedBeanDefinition;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.config.BeanDefinitionHolder;
@@ -68,8 +69,10 @@ public abstract class AnnotatedBeanDefinitionRegistryUtils {
                 present = nullSafeEquals(targetClass, annotatedClass);
                 if (present) {
                     if (logger.isDebugEnabled()) {
-                        logger.debug(format("The annotatedClass[class : %s , bean name : %s] was present in registry[%s]",
-                                className, beanName, registry));
+                        @SuppressWarnings("confidential")
+                        @NonConfidential String message = format("The annotatedClass[class : %s , bean name : %s] was present in registry[%s]",
+                                className, beanName, registry);
+                        logger.debug(message);
                     }
                     break;
                 }
@@ -106,7 +109,9 @@ public abstract class AnnotatedBeanDefinitionRegistryUtils {
         AnnotatedBeanDefinitionReader reader = new AnnotatedBeanDefinitionReader(registry);
 
         if (logger.isDebugEnabled()) {
-            logger.debug(registry.getClass().getSimpleName() + " will register annotated classes : " + asList(annotatedClasses) + " .");
+            @SuppressWarnings("confidential")
+            @NonConfidential String className = registry.getClass().getSimpleName();
+            logger.debug(className + " will register annotated classes");
         }
 
         reader.register(classesToRegister.toArray(EMPTY_CLASS_ARRAY));
@@ -129,7 +134,9 @@ public abstract class AnnotatedBeanDefinitionRegistryUtils {
             boolean debugEnabled = logger.isDebugEnabled();
 
             if (debugEnabled) {
-                logger.debug(registry.getClass().getSimpleName() + " will scan base packages " + Arrays.asList(basePackages) + ".");
+                @SuppressWarnings("confidential")
+                @NonConfidential String className = registry.getClass().getSimpleName();
+                logger.debug(className + " will scan base packages");
             }
 
             List<String> registeredBeanNames = Arrays.asList(registry.getBeanDefinitionNames());
@@ -142,13 +149,19 @@ public abstract class AnnotatedBeanDefinitionRegistryUtils {
             scannedBeanNames.removeAll(registeredBeanNames);
 
             if (debugEnabled) {
-                logger.debug("The Scanned Components[ count : " + count + "] under base packages " + Arrays.asList(basePackages) + " : ");
+                @SuppressWarnings("confidential")
+                @NonConfidential String countStr = count + "";
+                logger.debug("The Scanned Components[ count : " + countStr + "] under base packages: ");
             }
 
             for (String scannedBeanName : scannedBeanNames) {
                 BeanDefinition scannedBeanDefinition = registry.getBeanDefinition(scannedBeanName);
+                @SuppressWarnings("confidential")
+                @NonConfidential String beanName = scannedBeanName;
+                @SuppressWarnings("confidential")
+                @NonConfidential String beanDef = scannedBeanDefinition.getBeanClassName();
                 if (debugEnabled) {
-                    logger.debug("Component [ name : " + scannedBeanName + " , class : " + scannedBeanDefinition.getBeanClassName() + " ]");
+                    logger.debug("Component [ name : " + beanName + " , class : " + beanDef + " ]");
                 }
             }
         }
@@ -182,10 +195,14 @@ public abstract class AnnotatedBeanDefinitionRegistryUtils {
 
             if (logger.isInfoEnabled()) {
 
-                logger.info("BeanNameGenerator bean can't be found in BeanFactory with name ["
-                        + CONFIGURATION_BEAN_NAME_GENERATOR + "]");
+                @SuppressWarnings("confidential")
+                @NonConfidential String message = "BeanNameGenerator bean can't be found in BeanFactory with name ["
+                        + CONFIGURATION_BEAN_NAME_GENERATOR + "]";
+                logger.info(message);
+                @SuppressWarnings("confidential")
+                @NonConfidential String className = AnnotationBeanNameGenerator.class.getName();
                 logger.info("BeanNameGenerator will be a instance of " +
-                        AnnotationBeanNameGenerator.class.getName() +
+                        className +
                         " , it maybe a potential problem on bean name generation.");
             }
 

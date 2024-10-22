@@ -70,7 +70,7 @@ public abstract class OnceApplicationContextEventListener implements Application
 
         if (!originalEventSource) {
             if (log.isDebugEnabled()) {
-                log.debug("The source of event[" + event.getSource() + "] is not original!");
+                log.debug("The source of this event is not original!");
             }
         }
 

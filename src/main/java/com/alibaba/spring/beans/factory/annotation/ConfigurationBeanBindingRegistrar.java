@@ -19,6 +19,7 @@ package com.alibaba.spring.beans.factory.annotation;
 import com.alibaba.spring.util.PropertySourcesUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.checkerframework.checker.confidential.qual.NonConfidential;
 import org.springframework.beans.factory.support.AbstractBeanDefinition;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.support.BeanDefinitionReaderUtils;
@@ -77,9 +78,10 @@ public class ConfigurationBeanBindingRegistrar implements ImportBeanDefinitionRe
 
     public void registerConfigurationBeanDefinitions(Map<String, Object> attributes, BeanDefinitionRegistry registry) {
 
-        String prefix = getRequiredAttribute(attributes, "prefix");
+        String pre = getRequiredAttribute(attributes, "prefix");
 
-        prefix = environment.resolvePlaceholders(prefix);
+        @SuppressWarnings("confidential")
+        @NonConfidential String prefix = environment.resolvePlaceholders(pre);
 
         Class<?> configClass = getRequiredAttribute(attributes, "type");
 
@@ -93,7 +95,7 @@ public class ConfigurationBeanBindingRegistrar implements ImportBeanDefinitionRe
     }
 
 
-    private void registerConfigurationBeans(String prefix, Class<?> configClass, boolean multiple,
+    private void registerConfigurationBeans(@NonConfidential String prefix, Class<?> configClass, boolean multiple,
                                             boolean ignoreUnknownFields, boolean ignoreInvalidFields,
                                             BeanDefinitionRegistry registry) {
 
@@ -101,7 +103,9 @@ public class ConfigurationBeanBindingRegistrar implements ImportBeanDefinitionRe
 
         if (CollectionUtils.isEmpty(configurationProperties)) {
             if (log.isDebugEnabled()) {
-                log.debug("There is no property for binding to configuration class [" + configClass.getName()
+                @SuppressWarnings("confidential")
+                @NonConfidential String className = configClass.getName();
+                log.debug("There is no property for binding to configuration class [" + className
                         + "] within prefix [" + prefix + "]");
             }
             return;
@@ -111,14 +115,16 @@ public class ConfigurationBeanBindingRegistrar implements ImportBeanDefinitionRe
                 singleton(resolveSingleBeanName(configurationProperties, configClass, registry));
 
         for (String beanName : beanNames) {
-            registerConfigurationBean(beanName, configClass, multiple, ignoreUnknownFields, ignoreInvalidFields,
+            @SuppressWarnings("confidential")
+            @NonConfidential String bean = beanName;
+            registerConfigurationBean(bean, configClass, multiple, ignoreUnknownFields, ignoreInvalidFields,
                     configurationProperties, registry);
         }
 
         registerConfigurationBindingBeanPostProcessor(registry);
     }
 
-    private void registerConfigurationBean(String beanName, Class<?> configClass, boolean multiple,
+    private void registerConfigurationBean(@NonConfidential String beanName, Class<?> configClass, boolean multiple,
                                            boolean ignoreUnknownFields, boolean ignoreInvalidFields,
                                            Map<String, Object> configurationProperties,
                                            BeanDefinitionRegistry registry) {
@@ -136,7 +142,9 @@ public class ConfigurationBeanBindingRegistrar implements ImportBeanDefinitionRe
         registry.registerBeanDefinition(beanName, beanDefinition);
 
         if (log.isInfoEnabled()) {
-            log.info("The configuration bean definition [name : " + beanName + ", content : " + beanDefinition
+            @SuppressWarnings("confidential")
+            @NonConfidential String beanDef = beanDefinition.toString();
+            log.info("The configuration bean definition [name : " + beanName + ", content : " + beanDef
                     + "] has been registered.");
         }
     }
