@@ -162,7 +162,7 @@ public abstract class AnnotationInjectedBeanPostProcessor<A extends Annotation> 
 
                     if (Modifier.isStatic(field.getModifiers())) {
                         if (logger.isWarnEnabled()) {
-                            @SuppressWarnings("confidential")
+                            @SuppressWarnings("confidential") // literals
                             @NonConfidential String className = getAnnotationType().getName();
                             logger.warn("@" + className + " is not supported on static fields.");
                         }
@@ -204,7 +204,7 @@ public abstract class AnnotationInjectedBeanPostProcessor<A extends Annotation> 
                 if (annotation != null && method.equals(ClassUtils.getMostSpecificMethod(method, beanClass))) {
                     if (Modifier.isStatic(method.getModifiers())) {
                         if (logger.isWarnEnabled()) {
-                            @SuppressWarnings("confidential")
+                            @SuppressWarnings("confidential") // literals
                             @NonConfidential String simpleName = getAnnotationType().getSimpleName();
                             logger.warn("@" + simpleName + " annotation is not supported on static methods");
                         }
@@ -212,7 +212,7 @@ public abstract class AnnotationInjectedBeanPostProcessor<A extends Annotation> 
                     }
                     if (method.getParameterTypes().length == 0) {
                         if (logger.isWarnEnabled()) {
-                            @SuppressWarnings("confidential")
+                            @SuppressWarnings("confidential") // literals
                             @NonConfidential String simpleName = getAnnotationType().getSimpleName();
                             logger.warn("@" + simpleName + " annotation should only be used on methods with parameters");
                         }
@@ -282,7 +282,7 @@ public abstract class AnnotationInjectedBeanPostProcessor<A extends Annotation> 
 
         for (Object object : injectedObjectsCache.values()) {
             if (logger.isInfoEnabled()) {
-                @SuppressWarnings("confidential")
+                @SuppressWarnings("confidential") // true positive
                 @NonConfidential String obj = object.toString();
                 logger.info(obj + " was destroying!");
             }
@@ -296,7 +296,7 @@ public abstract class AnnotationInjectedBeanPostProcessor<A extends Annotation> 
         injectedObjectsCache.clear();
 
         if (logger.isInfoEnabled()) {
-            @SuppressWarnings("confidential")
+            @SuppressWarnings("confidential") // true positive
             @NonConfidential String className = getClass().toString();
             logger.info(className + " was destroying!");
         }

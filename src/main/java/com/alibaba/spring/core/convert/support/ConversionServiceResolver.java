@@ -105,7 +105,7 @@ public class ConversionServiceResolver {
 
     private void debug(String message, Object... args) {
         if (logger.isDebugEnabled()) {
-            @SuppressWarnings("confidential")
+            @SuppressWarnings("confidential") // true positive
             @NonConfidential String msgStr = format(message, args);
             logger.debug(msgStr);
         }

@@ -65,7 +65,7 @@ public abstract class BeanRegistrar {
             registered = true;
 
             if (log.isInfoEnabled()) {
-                @SuppressWarnings("confidential")
+                @SuppressWarnings("confidential") // true positive
                 @NonConfidential String beanDef = beanDefinition.toString();
                 log.info("The Infrastructure bean definition [" + beanDef
                         + "with name [" + beanName + "] has been registered.");
@@ -106,13 +106,13 @@ public abstract class BeanRegistrar {
             List<String> factoryImplClassNames = loadFactoryNames(factoryClass, classLoader);
             for (String factoryImplClassName : factoryImplClassNames) {
                 Class<?> factoryImplClass = resolveClassName(factoryImplClassName, classLoader);
-                @SuppressWarnings("confidential")
+                @SuppressWarnings("confidential") // true positive
                 @NonConfidential String beanName = decapitalize(getShortName(factoryImplClassName));
                 if (registerInfrastructureBean(registry, beanName, factoryImplClass)) {
                     count++;
                 } else {
                     if (log.isWarnEnabled()) {
-                        @SuppressWarnings("confidential")
+                        @SuppressWarnings("confidential") // true positive
                         @NonConfidential String message = format("The Factory Class bean[%s] has been registered with bean name[%s]",
                                 factoryImplClassName, beanName);
                         log.warn(message);

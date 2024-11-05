@@ -69,7 +69,7 @@ public abstract class AnnotatedBeanDefinitionRegistryUtils {
                 present = nullSafeEquals(targetClass, annotatedClass);
                 if (present) {
                     if (logger.isDebugEnabled()) {
-                        @SuppressWarnings("confidential")
+                        @SuppressWarnings("confidential") // true positive
                         @NonConfidential String message = format("The annotatedClass[class : %s , bean name : %s] was present in registry[%s]",
                                 className, beanName, registry);
                         logger.debug(message);
@@ -109,7 +109,7 @@ public abstract class AnnotatedBeanDefinitionRegistryUtils {
         AnnotatedBeanDefinitionReader reader = new AnnotatedBeanDefinitionReader(registry);
 
         if (logger.isDebugEnabled()) {
-            @SuppressWarnings("confidential")
+            @SuppressWarnings("confidential") // literals
             @NonConfidential String className = registry.getClass().getSimpleName();
             logger.debug(className + " will register annotated classes");
         }
@@ -134,7 +134,7 @@ public abstract class AnnotatedBeanDefinitionRegistryUtils {
             boolean debugEnabled = logger.isDebugEnabled();
 
             if (debugEnabled) {
-                @SuppressWarnings("confidential")
+                @SuppressWarnings("confidential") // literals
                 @NonConfidential String className = registry.getClass().getSimpleName();
                 logger.debug(className + " will scan base packages");
             }
@@ -149,16 +149,16 @@ public abstract class AnnotatedBeanDefinitionRegistryUtils {
             scannedBeanNames.removeAll(registeredBeanNames);
 
             if (debugEnabled) {
-                @SuppressWarnings("confidential")
+                @SuppressWarnings("confidential") // literals
                 @NonConfidential String countStr = count + "";
                 logger.debug("The Scanned Components[ count : " + countStr + "] under base packages: ");
             }
 
             for (String scannedBeanName : scannedBeanNames) {
                 BeanDefinition scannedBeanDefinition = registry.getBeanDefinition(scannedBeanName);
-                @SuppressWarnings("confidential")
+                @SuppressWarnings("confidential") // true positive
                 @NonConfidential String beanName = scannedBeanName;
-                @SuppressWarnings("confidential")
+                @SuppressWarnings("confidential") // true positive
                 @NonConfidential String beanDef = scannedBeanDefinition.getBeanClassName();
                 if (debugEnabled) {
                     logger.debug("Component [ name : " + beanName + " , class : " + beanDef + " ]");
@@ -195,11 +195,11 @@ public abstract class AnnotatedBeanDefinitionRegistryUtils {
 
             if (logger.isInfoEnabled()) {
 
-                @SuppressWarnings("confidential")
+                @SuppressWarnings("confidential") // literals
                 @NonConfidential String message = "BeanNameGenerator bean can't be found in BeanFactory with name ["
                         + CONFIGURATION_BEAN_NAME_GENERATOR + "]";
                 logger.info(message);
-                @SuppressWarnings("confidential")
+                @SuppressWarnings("confidential") // literals
                 @NonConfidential String className = AnnotationBeanNameGenerator.class.getName();
                 logger.info("BeanNameGenerator will be a instance of " +
                         className +

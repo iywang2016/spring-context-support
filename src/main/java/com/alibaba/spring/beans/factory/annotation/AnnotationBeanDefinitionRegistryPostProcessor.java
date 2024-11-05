@@ -209,7 +209,7 @@ public abstract class AnnotationBeanDefinitionRegistryPostProcessor implements B
             putPrimaryBeanDefinition(primaryBeanDefinitions, annotatedBeanDefinition, beanDefinitionHolder.getAliases());
         } else {
             if (logger.isErrorEnabled()) {
-                @SuppressWarnings("confidential")
+                @SuppressWarnings("confidential") // true positive
                 @NonConfidential String beanDef = beanDefinitionHolder.toString();
                 logger.error("What's the problem? Please investigate " + beanDef);
             }

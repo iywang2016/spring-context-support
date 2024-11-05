@@ -157,9 +157,9 @@ public class ConfigurationBeanBindingPostProcessor implements BeanPostProcessor,
         getConfigurationBeanBinder().bind(configurationProperties, ignoreUnknownFields, ignoreInvalidFields, configurationBean);
 
         if (log.isInfoEnabled()) {
-            @SuppressWarnings("confidential")
+            @SuppressWarnings("confidential") // true positive
             @NonConfidential String configBean = configurationBean.toString();
-            @SuppressWarnings("confidential")
+            @SuppressWarnings("confidential") // true positive
             @NonConfidential String configProps = configurationProperties.toString();
             log.info("The configuration bean [" + configBean + "] have been binding by the " +
                     "configuration properties [" + configProps + "]");

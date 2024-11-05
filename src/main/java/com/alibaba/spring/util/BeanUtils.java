@@ -206,9 +206,9 @@ public abstract class BeanUtils {
             if (logger.isErrorEnabled()) {
                 String errorMessage = e.getMessage();
                 if (!checkConfidential(errorMessage)) {
-                    @SuppressWarnings("confidential")
+                    @SuppressWarnings("confidential") // true positive
                     @NonConfidential String nonConfMessage = errorMessage;
-                    @SuppressWarnings("confidential")
+                    @SuppressWarnings("confidential") // true positive
                     @NonConfidential Exception ex = e;
                     logger.error(nonConfMessage, ex);
                 }
@@ -238,7 +238,7 @@ public abstract class BeanUtils {
 
         if (ObjectUtils.isEmpty(beanNames)) {
             if (logger.isDebugEnabled()) {
-                @SuppressWarnings("confidential")
+                @SuppressWarnings("confidential") // literals
                 @NonConfidential String beanName = beanClass.getName();
                 logger.debug("The bean [ class : " + beanName + " ] can't be found ");
             }
@@ -258,9 +258,9 @@ public abstract class BeanUtils {
             if (logger.isErrorEnabled()) {
                 String errorMessage = e.getMessage();
                 if (!checkConfidential(errorMessage)) {
-                    @SuppressWarnings("confidential")
+                    @SuppressWarnings("confidential") // true positive
                     @NonConfidential String nonConfMessage = errorMessage;
-                    @SuppressWarnings("confidential")
+                    @SuppressWarnings("confidential") // true positive
                     @NonConfidential Exception ex = e;
                     logger.error(nonConfMessage, ex);
                 }
@@ -305,7 +305,7 @@ public abstract class BeanUtils {
         }
 
         if (logger.isDebugEnabled()) {
-            @SuppressWarnings("confidential")
+            @SuppressWarnings("confidential") // true positive
             @NonConfidential String message = format("The bean[name : %s , type : %s] can't be found in Spring BeanFactory",
                     beanName, beanType.getName());
             logger.debug(message);

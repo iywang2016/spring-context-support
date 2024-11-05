@@ -80,7 +80,7 @@ public class ConfigurationBeanBindingRegistrar implements ImportBeanDefinitionRe
 
         String pre = getRequiredAttribute(attributes, "prefix");
 
-        @SuppressWarnings("confidential")
+        @SuppressWarnings("confidential") // literals
         @NonConfidential String prefix = environment.resolvePlaceholders(pre);
 
         Class<?> configClass = getRequiredAttribute(attributes, "type");
@@ -103,7 +103,7 @@ public class ConfigurationBeanBindingRegistrar implements ImportBeanDefinitionRe
 
         if (CollectionUtils.isEmpty(configurationProperties)) {
             if (log.isDebugEnabled()) {
-                @SuppressWarnings("confidential")
+                @SuppressWarnings("confidential") // literals
                 @NonConfidential String className = configClass.getName();
                 log.debug("There is no property for binding to configuration class [" + className
                         + "] within prefix [" + prefix + "]");
@@ -115,7 +115,7 @@ public class ConfigurationBeanBindingRegistrar implements ImportBeanDefinitionRe
                 singleton(resolveSingleBeanName(configurationProperties, configClass, registry));
 
         for (String beanName : beanNames) {
-            @SuppressWarnings("confidential")
+            @SuppressWarnings("confidential") // true positive
             @NonConfidential String bean = beanName;
             registerConfigurationBean(bean, configClass, multiple, ignoreUnknownFields, ignoreInvalidFields,
                     configurationProperties, registry);
@@ -142,7 +142,7 @@ public class ConfigurationBeanBindingRegistrar implements ImportBeanDefinitionRe
         registry.registerBeanDefinition(beanName, beanDefinition);
 
         if (log.isInfoEnabled()) {
-            @SuppressWarnings("confidential")
+            @SuppressWarnings("confidential") // true positive
             @NonConfidential String beanDef = beanDefinition.toString();
             log.info("The configuration bean definition [name : " + beanName + ", content : " + beanDef
                     + "] has been registered.");
