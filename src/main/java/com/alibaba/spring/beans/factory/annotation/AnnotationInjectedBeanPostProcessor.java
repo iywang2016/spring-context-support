@@ -135,8 +135,10 @@ public abstract class AnnotationInjectedBeanPostProcessor<A extends Annotation> 
         } catch (BeanCreationException ex) {
             throw ex;
         } catch (Throwable ex) {
+            @SuppressWarnings("confidential") // true positive
+            @NonConfidential Throwable nonConfEx = ex;
             throw new BeanCreationException(beanName, "Injection of @" + getAnnotationType().getName()
-                    + " dependencies is failed", ex);
+                    + " dependencies is failed", nonConfEx);
         }
         return pvs;
     }
@@ -162,8 +164,7 @@ public abstract class AnnotationInjectedBeanPostProcessor<A extends Annotation> 
 
                     if (Modifier.isStatic(field.getModifiers())) {
                         if (logger.isWarnEnabled()) {
-                            @SuppressWarnings("confidential") // literals
-                            @NonConfidential String className = getAnnotationType().getName();
+                            String className = getAnnotationType().getName();
                             logger.warn("@" + className + " is not supported on static fields.");
                         }
                         return;
@@ -204,16 +205,14 @@ public abstract class AnnotationInjectedBeanPostProcessor<A extends Annotation> 
                 if (annotation != null && method.equals(ClassUtils.getMostSpecificMethod(method, beanClass))) {
                     if (Modifier.isStatic(method.getModifiers())) {
                         if (logger.isWarnEnabled()) {
-                            @SuppressWarnings("confidential") // literals
-                            @NonConfidential String simpleName = getAnnotationType().getSimpleName();
+                            String simpleName = getAnnotationType().getSimpleName();
                             logger.warn("@" + simpleName + " annotation is not supported on static methods");
                         }
                         return;
                     }
                     if (method.getParameterTypes().length == 0) {
                         if (logger.isWarnEnabled()) {
-                            @SuppressWarnings("confidential") // literals
-                            @NonConfidential String simpleName = getAnnotationType().getSimpleName();
+                            String simpleName = getAnnotationType().getSimpleName();
                             logger.warn("@" + simpleName + " annotation should only be used on methods with parameters");
                         }
                     }
@@ -251,8 +250,10 @@ public abstract class AnnotationInjectedBeanPostProcessor<A extends Annotation> 
                         metadata = buildAnnotatedMetadata(clazz);
                         this.injectionMetadataCache.put(cacheKey, metadata);
                     } catch (NoClassDefFoundError err) {
+                        @SuppressWarnings("confidential") // true positive
+                        @NonConfidential NoClassDefFoundError nonConfEx = err;
                         throw new IllegalStateException("Failed to introspect object class [" + clazz.getName() +
-                                "] for annotation metadata: could not find class that it depends on", err);
+                                "] for annotation metadata: could not find class that it depends on", nonConfEx);
                     }
                 }
             }

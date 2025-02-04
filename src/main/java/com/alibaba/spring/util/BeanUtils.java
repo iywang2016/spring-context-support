@@ -231,15 +231,14 @@ public abstract class BeanUtils {
      * @throws NoUniqueBeanDefinitionException if more than one bean of the given type was found
      * @see org.springframework.beans.factory.BeanFactoryUtils#beanOfTypeIncludingAncestors(ListableBeanFactory, Class)
      */
-    public static <T> T getOptionalBean(ListableBeanFactory beanFactory, Class<T> beanClass,
+    public static <@NonConfidential T> T getOptionalBean(ListableBeanFactory beanFactory, Class<T> beanClass,
                                         boolean includingAncestors) throws BeansException {
 
         String[] beanNames = getBeanNames(beanFactory, beanClass, includingAncestors);
 
         if (ObjectUtils.isEmpty(beanNames)) {
             if (logger.isDebugEnabled()) {
-                @SuppressWarnings("confidential") // literals
-                @NonConfidential String beanName = beanClass.getName();
+                String beanName = beanClass.getName();
                 logger.debug("The bean [ class : " + beanName + " ] can't be found ");
             }
             return null;
@@ -281,7 +280,7 @@ public abstract class BeanUtils {
      * @return Bean object if found , or return <code>null</code>.
      * @throws NoUniqueBeanDefinitionException if more than one bean of the given type was found
      */
-    public static <T> T getOptionalBean(ListableBeanFactory beanFactory, Class<T> beanClass) throws BeansException {
+    public static <@NonConfidential T> T getOptionalBean(ListableBeanFactory beanFactory, Class<T> beanClass) throws BeansException {
 
         return getOptionalBean(beanFactory, beanClass, false);
 
@@ -298,7 +297,7 @@ public abstract class BeanUtils {
      * @throws BeansException in case of creation errors
      * @since 1.0.6
      */
-    public static <T> T getBeanIfAvailable(BeanFactory beanFactory, String beanName, Class<T> beanType)
+    public static <@NonConfidential T> T getBeanIfAvailable(BeanFactory beanFactory, String beanName, Class<T> beanType)
             throws BeansException {
         if (isBeanPresent(beanFactory, beanName, beanType)) {
             return beanFactory.getBean(beanName, beanType);
@@ -339,7 +338,7 @@ public abstract class BeanUtils {
      * @param <T>      the type of Bean
      * @return sorted Beans {@link Map}
      */
-    public static <T> Map<String, T> sort(final Map<String, T> beansMap) {
+    public static <T> Map<String, @NonConfidential T> sort(final Map<String, T> beansMap) {
 
         Map<String, T> unmodifiableBeansMap = Collections.unmodifiableMap(beansMap);
 
@@ -354,7 +353,7 @@ public abstract class BeanUtils {
 
         AnnotationAwareOrderComparator.sort(namingBeans);
 
-        Map<String, T> sortedBeansMap = new LinkedHashMap<String, T>(beansMap.size());
+        Map<String, @NonConfidential T> sortedBeansMap = new LinkedHashMap<String, @NonConfidential T>(beansMap.size());
 
         for (NamingBean<T> namingBean : namingBeans) {
             sortedBeansMap.put(namingBean.name, namingBean.bean);
@@ -374,9 +373,9 @@ public abstract class BeanUtils {
 
         private final String name;
 
-        private final T bean;
+        private final @NonConfidential T bean;
 
-        NamingBean(String name, T bean) {
+        NamingBean(String name, @NonConfidential T bean) {
             this.name = name;
             this.bean = bean;
         }

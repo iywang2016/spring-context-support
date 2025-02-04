@@ -109,8 +109,7 @@ public abstract class AnnotatedBeanDefinitionRegistryUtils {
         AnnotatedBeanDefinitionReader reader = new AnnotatedBeanDefinitionReader(registry);
 
         if (logger.isDebugEnabled()) {
-            @SuppressWarnings("confidential") // literals
-            @NonConfidential String className = registry.getClass().getSimpleName();
+            String className = registry.getClass().getSimpleName();
             logger.debug(className + " will register annotated classes");
         }
 
@@ -134,8 +133,7 @@ public abstract class AnnotatedBeanDefinitionRegistryUtils {
             boolean debugEnabled = logger.isDebugEnabled();
 
             if (debugEnabled) {
-                @SuppressWarnings("confidential") // literals
-                @NonConfidential String className = registry.getClass().getSimpleName();
+                String className = registry.getClass().getSimpleName();
                 logger.debug(className + " will scan base packages");
             }
 
@@ -149,8 +147,7 @@ public abstract class AnnotatedBeanDefinitionRegistryUtils {
             scannedBeanNames.removeAll(registeredBeanNames);
 
             if (debugEnabled) {
-                @SuppressWarnings("confidential") // literals
-                @NonConfidential String countStr = count + "";
+                String countStr = count + "";
                 logger.debug("The Scanned Components[ count : " + countStr + "] under base packages: ");
             }
 
@@ -195,12 +192,10 @@ public abstract class AnnotatedBeanDefinitionRegistryUtils {
 
             if (logger.isInfoEnabled()) {
 
-                @SuppressWarnings("confidential") // literals
-                @NonConfidential String message = "BeanNameGenerator bean can't be found in BeanFactory with name ["
+                String message = "BeanNameGenerator bean can't be found in BeanFactory with name ["
                         + CONFIGURATION_BEAN_NAME_GENERATOR + "]";
                 logger.info(message);
-                @SuppressWarnings("confidential") // literals
-                @NonConfidential String className = AnnotationBeanNameGenerator.class.getName();
+                String className = AnnotationBeanNameGenerator.class.getName();
                 logger.info("BeanNameGenerator will be a instance of " +
                         className +
                         " , it maybe a potential problem on bean name generation.");

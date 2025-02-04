@@ -1,5 +1,6 @@
 package com.alibaba.spring.util;
 
+import org.checkerframework.checker.confidential.qual.NonConfidential;
 import org.springframework.core.annotation.AnnotationAttributes;
 import org.springframework.core.env.Environment;
 import org.springframework.core.env.PropertyResolver;
@@ -320,7 +321,7 @@ public abstract class AnnotationUtils {
      * @since 1.0.6
      */
     public static <T> T getAttribute(Map<String, Object> attributes, String attributeName, boolean required) {
-        T value = getAttribute(attributes, attributeName, null);
+        @NonConfidential T value = getAttribute(attributes, attributeName, null);
         if (required && value == null) {
             throw new IllegalStateException("The attribute['" + attributeName + "] is required!");
         }

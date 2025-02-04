@@ -80,8 +80,7 @@ public class ConfigurationBeanBindingRegistrar implements ImportBeanDefinitionRe
 
         String pre = getRequiredAttribute(attributes, "prefix");
 
-        @SuppressWarnings("confidential") // literals
-        @NonConfidential String prefix = environment.resolvePlaceholders(pre);
+        String prefix = environment.resolvePlaceholders(pre);
 
         Class<?> configClass = getRequiredAttribute(attributes, "type");
 
@@ -103,8 +102,7 @@ public class ConfigurationBeanBindingRegistrar implements ImportBeanDefinitionRe
 
         if (CollectionUtils.isEmpty(configurationProperties)) {
             if (log.isDebugEnabled()) {
-                @SuppressWarnings("confidential") // literals
-                @NonConfidential String className = configClass.getName();
+                String className = configClass.getName();
                 log.debug("There is no property for binding to configuration class [" + className
                         + "] within prefix [" + prefix + "]");
             }

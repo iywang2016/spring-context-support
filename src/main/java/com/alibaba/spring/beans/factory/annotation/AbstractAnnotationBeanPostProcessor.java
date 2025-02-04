@@ -210,8 +210,7 @@ public abstract class AbstractAnnotationBeanPostProcessor extends
 
                         if (Modifier.isStatic(field.getModifiers())) {
                             if (logger.isWarnEnabled()) {
-                                @SuppressWarnings("confidential") // literals
-                                @NonConfidential String annoName = annotationType.getName();
+                                String annoName = annotationType.getName();
                                 logger.warn("@" + annoName + " is not supported on static fields");
                             }
                             return;
@@ -255,16 +254,14 @@ public abstract class AbstractAnnotationBeanPostProcessor extends
                     if (attributes != null && method.equals(ClassUtils.getMostSpecificMethod(method, beanClass))) {
                         if (Modifier.isStatic(method.getModifiers())) {
                             if (logger.isWarnEnabled()) {
-                                @SuppressWarnings("confidential") // literals
-                                @NonConfidential String annoName = annotationType.getName();
+                                String annoName = annotationType.getName();
                                 logger.warn("@" + annoName + " annotation is not supported on static methods");
                             }
                             return;
                         }
                         if (method.getParameterTypes().length == 0) {
                             if (logger.isWarnEnabled()) {
-                                @SuppressWarnings("confidential") // literals
-                                @NonConfidential String annoName = annotationType.getName();
+                                String annoName = annotationType.getName();
                                 logger.warn("@" + annoName + " annotation should only be used on methods with parameters");
                             }
                         }
