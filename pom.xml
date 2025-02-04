@@ -45,7 +45,7 @@
         <dependency>
             <groupId>org.checkerframework</groupId>
             <artifactId>checker-qual</artifactId>
-            <version>3.46.1-SNAPSHOT</version>
+            <version>3.48.5-SNAPSHOT</version>
         </dependency>
 
         <!-- Spring Framework -->
@@ -91,7 +91,7 @@
                                 <path>
                                     <groupId>org.checkerframework</groupId>
                                     <artifactId>checker</artifactId>
-                                    <version>3.46.1-SNAPSHOT</version>
+                                    <version>3.48.5-SNAPSHOT</version>
                                 </path>
                             </annotationProcessorPaths>
                             <annotationProcessors>
