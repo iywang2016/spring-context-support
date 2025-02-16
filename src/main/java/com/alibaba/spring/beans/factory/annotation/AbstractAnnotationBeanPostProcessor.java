@@ -181,8 +181,10 @@ public abstract class AbstractAnnotationBeanPostProcessor extends
         } catch (BeanCreationException ex) {
             throw ex;
         } catch (Throwable ex) {
+            @SuppressWarnings("confidential") // true positive
+            @NonConfidential Throwable nonConfEx = (@NonConfidential Throwable) ex;
             throw new BeanCreationException(beanName, "Injection of @" + getAnnotationType().getSimpleName()
-                    + " dependencies is failed", ex);
+                    + " dependencies is failed", nonConfEx);
         }
         return pvs;
     }
@@ -311,8 +313,10 @@ public abstract class AbstractAnnotationBeanPostProcessor extends
                         metadata = buildAnnotatedMetadata(clazz);
                         this.injectionMetadataCache.put(cacheKey, metadata);
                     } catch (NoClassDefFoundError err) {
+                        @SuppressWarnings("confidential") // true positive
+                        @NonConfidential NoClassDefFoundError nonConfErr = (@NonConfidential NoClassDefFoundError) err;
                         throw new IllegalStateException("Failed to introspect object class [" + clazz.getName() +
-                                "] for annotation metadata: could not find class that it depends on", err);
+                                "] for annotation metadata: could not find class that it depends on", nonConfErr);
                     }
                 }
             }

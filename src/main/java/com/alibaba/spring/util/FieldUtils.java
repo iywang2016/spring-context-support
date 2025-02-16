@@ -1,5 +1,6 @@
 package com.alibaba.spring.util;
 
+import org.checkerframework.checker.confidential.qual.Confidential;
 import org.springframework.util.ReflectionUtils;
 
 import java.lang.reflect.Field;
@@ -24,7 +25,7 @@ public abstract class FieldUtils {
      * @param <T>       field type
      * @return {@link Field} Value
      */
-    public static <T> T getFieldValue(Object object, String fieldName) {
+    public static <T> @Confidential T getFieldValue(Object object, String fieldName) {
         return (T) getFieldValue(object, fieldName, null);
     }
 
@@ -37,7 +38,7 @@ public abstract class FieldUtils {
      * @param defaultValue default value
      * @return {@link Field} Value
      */
-    public static <T> T getFieldValue(Object object, String fieldName, T defaultValue) {
+    public static <T> @Confidential T getFieldValue(Object object, String fieldName, T defaultValue) {
 
         T value = getFieldValue(object, fieldName);
 
@@ -53,9 +54,9 @@ public abstract class FieldUtils {
      * @param <T>       field type
      * @return {@link Field} Value
      */
-    public static <T> T getFieldValue(Object object, String fieldName, Class<T> fieldType) {
+    public static <T> @Confidential T getFieldValue(Object object, String fieldName, Class<T> fieldType) {
 
-        T fieldValue = null;
+        @Confidential T fieldValue = null;
 
         Field field = ReflectionUtils.findField(object.getClass(), fieldName, fieldType);
 

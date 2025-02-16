@@ -1,5 +1,6 @@
 package com.alibaba.spring.beans.factory.config;
 
+import org.checkerframework.checker.confidential.qual.NonConfidential;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.util.ClassUtils;
@@ -28,7 +29,7 @@ public abstract class GenericBeanPostProcessorAdapter<T> implements BeanPostProc
     @Override
     public final Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
         if (ClassUtils.isAssignableValue(beanType, bean)) {
-            return doPostProcessBeforeInitialization((T) bean, beanName);
+            return (@NonConfidential T) doPostProcessBeforeInitialization((T) bean, beanName);
         }
         return bean;
     }
@@ -36,7 +37,7 @@ public abstract class GenericBeanPostProcessorAdapter<T> implements BeanPostProc
     @Override
     public final Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
         if (ClassUtils.isAssignableValue(beanType, bean)) {
-            return doPostProcessAfterInitialization((T) bean, beanName);
+            return (@NonConfidential T) doPostProcessAfterInitialization((T) bean, beanName);
         }
         return bean;
     }

@@ -292,7 +292,7 @@ public abstract class AnnotationUtils {
      * @return the attribute value if found
      * @since 1.0.3
      */
-    public static <T> T getAttribute(Annotation annotation, String attributeName) {
+    public static <T> @NonConfidential T getAttribute(Annotation annotation, String attributeName) {
         return getAttribute(org.springframework.core.annotation.AnnotationUtils.getAnnotationAttributes(annotation), attributeName);
     }
 
@@ -305,7 +305,7 @@ public abstract class AnnotationUtils {
      * @return the attribute value if found
      * @since 1.0.3
      */
-    public static <T> T getAttribute(Map<String, Object> attributes, String attributeName) {
+    public static <T> @NonConfidential T getAttribute(Map<String, Object> attributes, String attributeName) {
         return getAttribute(attributes, attributeName, false);
     }
 
@@ -320,7 +320,7 @@ public abstract class AnnotationUtils {
      * @throws IllegalStateException if attribute value can't be found
      * @since 1.0.6
      */
-    public static <T> T getAttribute(Map<String, Object> attributes, String attributeName, boolean required) {
+    public static <T> @NonConfidential T getAttribute(Map<String, Object> attributes, String attributeName, boolean required) {
         @NonConfidential T value = getAttribute(attributes, attributeName, null);
         if (required && value == null) {
             throw new IllegalStateException("The attribute['" + attributeName + "] is required!");
@@ -353,7 +353,7 @@ public abstract class AnnotationUtils {
      * @throws IllegalStateException if attribute value can't be found
      * @since 1.0.6
      */
-    public static <T> T getRequiredAttribute(Map<String, Object> attributes, String attributeName) {
+    public static <T> @NonConfidential T getRequiredAttribute(Map<String, Object> attributes, String attributeName) {
         return getAttribute(attributes, attributeName, true);
     }
 

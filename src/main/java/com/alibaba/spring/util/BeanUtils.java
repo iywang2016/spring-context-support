@@ -340,13 +340,13 @@ public abstract class BeanUtils {
      */
     public static <T> Map<String, @NonConfidential T> sort(final Map<String, T> beansMap) {
 
-        Map<String, T> unmodifiableBeansMap = Collections.unmodifiableMap(beansMap);
+        Map<String, @NonConfidential T> unmodifiableBeansMap = (Map<String, @NonConfidential T>) Collections.unmodifiableMap(beansMap);
 
         List<NamingBean<T>> namingBeans = new ArrayList<NamingBean<T>>(unmodifiableBeansMap.size());
 
-        for (Map.Entry<String, T> entry : unmodifiableBeansMap.entrySet()) {
+        for (Map.Entry<String, @NonConfidential T> entry : unmodifiableBeansMap.entrySet()) {
             String beanName = entry.getKey();
-            T bean = entry.getValue();
+            @NonConfidential T bean = entry.getValue();
             NamingBean<T> namingBean = new NamingBean<T>(beanName, bean);
             namingBeans.add(namingBean);
         }

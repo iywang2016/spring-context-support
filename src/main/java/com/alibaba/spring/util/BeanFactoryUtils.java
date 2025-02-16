@@ -16,6 +16,7 @@
  */
 package com.alibaba.spring.util;
 
+import org.checkerframework.checker.confidential.qual.NonConfidential;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.ListableBeanFactory;
 
@@ -48,7 +49,7 @@ public abstract class BeanFactoryUtils {
      * @param <T>         the {@link Class type} of Bean
      * @return A bean if present , or <code>null</code>
      */
-    public static <T> T getOptionalBean(ListableBeanFactory beanFactory, String beanName, Class<T> beanType) {
+    public static <T> @NonConfidential T getOptionalBean(ListableBeanFactory beanFactory, String beanName, Class<T> beanType) {
 
         if (!hasText(beanName)) {
             return null;
@@ -56,7 +57,7 @@ public abstract class BeanFactoryUtils {
 
         String[] beanNames = of(beanName);
 
-        List<T> beans = getBeans(beanFactory, beanNames, beanType);
+        List<@NonConfidential T> beans = (List<@NonConfidential T>) getBeans(beanFactory, beanNames, beanType);
 
         return isEmpty(beans) ? null : beans.get(0);
     }
